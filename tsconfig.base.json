@@ -1,33 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "module": "commonjs",
     "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "baseUrl": ".",
+    "types": ["node"],
     "paths": {
-      "@flores-verdes/shared-types": ["packages/shared-types/src"],
-      "@flores-verdes/shared-config": ["packages/shared-config/src"],
-      "@flores-verdes/ui-kit": ["packages/ui-kit/src"]
+      "@flores-verdes/shared-types/*": ["packages/shared-types/src/*"],
+      "@flores-verdes/shared-config/*": ["packages/shared-config/src/*"]
     }
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build"
-  ]
+  }
 }

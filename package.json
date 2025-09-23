@@ -1,28 +1,30 @@
 {
-  "name": "flores-verdes",
+  "name": "flores-verdes-monorepo",
   "version": "1.0.0",
-  "description": "Sistema de gestión agrícola para FloresVerdes",
+  "description": "Monorepo for Flores Verdes harvest evaluation system",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev:mobile": "pnpm --filter mobile start",
     "dev:api": "pnpm --filter api start:dev",
-    "build": "pnpm -r build",
-    "lint": "pnpm -r lint",
-    "test": "pnpm -r test",
-    "clean": "pnpm -r clean"
+    "dev:supabase": "cd infra && supabase start",
+    "dev": "concurrently \"pnpm dev:api\" \"pnpm dev:mobile\"",
+    "build": "pnpm --filter api build && pnpm --filter mobile build",
+    "test": "pnpm --recursive test",
+    "lint": "pnpm --recursive lint",
+    "type-check": "pnpm --recursive type-check",
+    "clean": "pnpm --recursive clean"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "concurrently": "^9.0.0",
     "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.0",
     "typescript": "^5.0.0"
   },
-  "packageManager": "pnpm@8.0.0"
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
 }

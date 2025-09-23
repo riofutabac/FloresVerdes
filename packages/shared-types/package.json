@@ -1,22 +1,10 @@
 {
   "name": "@flores-verdes/shared-types",
   "version": "1.0.0",
-  "description": "Tipos TypeScript compartidos para FloresVerdes",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "clean": "rm -rf dist"
-  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {},
   "devDependencies": {
     "typescript": "^5.0.0"
-  },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "publishConfig": {
-    "access": "restricted"
   }
 }

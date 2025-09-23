@@ -1,113 +1,81 @@
-// Tipos de evaluación
-export interface Evaluacion {
-  id?: string;
-  uuid?: string;
-  operario: string;
-  variedad: string;
-  lote: string;
-  calidad: number;
-  cantidad: number;
-  observaciones?: string;
-  tieneDefectos: boolean;
-  fechaCreacion?: string;
-  synced?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+// Tipos base del usuario
+export type UserRole = "admin" | "operario" | "gerente";
 
-// Tipos de usuario y roles
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  SUPERVISOR = 'SUPERVISOR',
-  OPERARIO = 'OPERARIO',
-}
-
-export interface Usuario {
+export type User = {
   id: string;
-  nombre: string;
   email: string;
-  rol: UserRole;
+  name: string;
+  role: UserRole;
+  created_at: string;
+  updated_at: string;
+};
+
+// Tipos para evaluaciones de cosecha
+export type EvaluationStatus = "draft" | "completed" | "synced";
+
+export type Evaluation = {
+  id: string;
+  user_id: string;
+  lote_id: string;
+  fecha_evaluacion: string;
+  status: EvaluationStatus;
+  datos_json: Record<string, any>;
+  observaciones?: string;
+  created_at: string;
+  updated_at: string;
+  synced_at?: string;
+};
+
+// Tipos para lotes
+export type Lote = {
+  id: string;
+  nombre: string;
+  variedad_id: string;
+  hectareas: number;
+  ubicacion?: string;
   activo: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+  created_at: string;
+  updated_at: string;
+};
 
-// Tipos de KPI
-export interface KPIData {
-  produccionTotal: number;
-  calidadPromedio: number;
-  evaluacionesTotales: number;
-  tendencias: TendenciaData[];
-}
-
-export interface TendenciaData {
-  fecha: string;
-  valor: number;
-  tipo: 'produccion' | 'calidad' | 'cantidad';
-}
-
-export interface MetricasPorVariedad {
-  variedad: string;
-  cantidadTotal: number;
-  calidadPromedio: number;
-  evaluaciones: number;
-}
-
-export interface MetricasPorOperario {
-  operario: string;
-  cantidadTotal: number;
-  calidadPromedio: number;
-  evaluaciones: number;
-}
-
-// Tipos de sync
-export interface SyncItem {
-  id: number;
-  tableName: string;
-  recordId: string;
-  operation: 'INSERT' | 'UPDATE' | 'DELETE';
-  data: string; // JSON stringified
-  createdAt: Date;
-  retryCount: number;
-}
-
-// Tipos de respuesta API
-export interface ApiResponse<T = any> {
-  success: boolean;
-  data?: T;
-  message?: string;
-  error?: string;
-}
-
-export interface PaginatedResponse<T = any> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
-
-// Tipos de parámetros del sistema
-export interface ParametroSistema {
-  clave: string;
-  valor: string;
-  descripcion?: string;
-  tipo: 'string' | 'number' | 'boolean' | 'json';
-  categoria: string;
-}
-
-// Tipos de variedades
-export interface Variedad {
+// Tipos para variedades
+export type Variedad = {
   id: string;
   nombre: string;
   descripcion?: string;
-  activa: boolean;
-  parametrosCalidad?: ParametroCalidad[];
-}
+  parametros_evaluacion: Record<string, any>;
+  activo: boolean;
+  created_at: string;
+  updated_at: string;
+};
 
-export interface ParametroCalidad {
+// Tipos para KPIs
+export type KPIMetric = {
+  id: string;
   nombre: string;
-  valorMinimo: number;
-  valorMaximo: number;
-  unidad?: string;
-}
+  valor: number;
+  unidad: string;
+  fecha: string;
+  tipo: "cosecha" | "calidad" | "rendimiento";
+};
+
+// DTOs para APIs
+export type CreateEvaluationDto = {
+  lote_id: string;
+  fecha_evaluacion: string;
+  datos_json: Record<string, any>;
+  observaciones?: string;
+};
+
+export type UpdateEvaluationDto = Partial<CreateEvaluationDto>;
+
+export type LoginDto = {
+  email: string;
+  password: string;
+};
+
+export type AuthResponse = {
+  user: User;
+  token: string;
+  expires_at: string;
+};
