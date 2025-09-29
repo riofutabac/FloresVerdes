@@ -2,8 +2,7 @@
 export { HomeScreen } from './HomeScreen';
 
 // Pantallas de Cosecha
-export { CosechaScreen } from './Cosecha/CosechaScreen';
-export { ListaCosechasScreen } from './Cosecha/ListaCosechasScreen';
+export { EvaluacionSubprocesosScreen } from './Cosecha/EvaluacionSubprocesosScreen';
 
 // Aquí puedes agregar más pantallas conforme las vayas creando:
 // export { LoginScreen } from './LoginScreen';

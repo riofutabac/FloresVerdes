@@ -9,28 +9,29 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation';
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 interface Props {
   userName?: string;
-  onProfileClick?: () => void;
-  onCosechaClick?: () => void;
-  onPostcosechaClick?: () => void;
-  onPruebasClick?: () => void;
-  onDevolucionesClick?: () => void;
-  onAdminClick?: () => void;
-  onReportesClick?: () => void;
 }
 
 export const HomeScreen: React.FC<Props> = ({
   userName = "Francisco",
-  onProfileClick = () => console.log('Perfil'),
-  onCosechaClick = () => console.log('Cosecha'),
-  onPostcosechaClick = () => console.log('Postcosecha'),
-  onPruebasClick = () => console.log('Pruebas'),
-  onDevolucionesClick = () => console.log('Devoluciones'),
-  onAdminClick = () => console.log('Administración'),
-  onReportesClick = () => console.log('Reportes/KPIs'),
 }) => {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  // 🎯 Navegación específica para cada módulo
+  const onProfileClick = () => console.log('Perfil');
+  const onCosechaClick = () => navigation.navigate('EvaluacionCosecha');
+  const onPostcosechaClick = () => console.log('Postcosecha - Próximamente');
+  const onPruebasClick = () => console.log('Pruebas - Próximamente');
+  const onDevolucionesClick = () => console.log('Devoluciones - Próximamente');
+  const onAdminClick = () => console.log('Administración - Próximamente');
+  const onReportesClick = () => console.log('Reportes/KPIs - Próximamente');
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground

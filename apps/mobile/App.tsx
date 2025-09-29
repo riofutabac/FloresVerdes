@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { HomeScreen } from './src/screens/HomeScreen';
+import { AppNavigator } from './src/navigation';
 
 export default function App() {
   return (
     <>
-      <HomeScreen />
-      <StatusBar style="auto" />
+      <AppNavigator />
+      <StatusBar style="light" backgroundColor="#2E7D32" />
     </>
   );
 }
