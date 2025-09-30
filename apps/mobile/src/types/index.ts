@@ -2,14 +2,46 @@
 export * from '@flores-verdes/shared-types';
 import { User } from '@flores-verdes/shared-types';
 
-// Tipos específicos del frontend
-export type NavigationParams = {
+// 🎯 TIPOS ESPECÍFICOS DEL FRONTEND MÓVIL
+
+// Navegación
+export type RootStackParamList = {
   Home: undefined;
-  Login: undefined;
-  Evaluacion: { loteId?: string };
+  EvaluacionCosecha: undefined;
   Profile: undefined;
+  Login: undefined;
+  // Futuras pantallas:
+  // PostcosechaScreen: undefined;
+  // ReportesScreen: { evaluacionId?: string };
 };
 
+// Evaluaciones - Frontend específico
+export interface Operario {
+  id: string;
+  nombre: string;
+  correo: string;
+  area: string;
+  cuadrante: string;
+  discapacidad: string;
+  fechaIngreso: string;
+}
+
+export interface Calificaciones {
+  [key: string]: 'Alto' | 'Medio' | 'Bajo';
+}
+
+export interface EvaluacionLocal {
+  id?: string;
+  area: string;
+  cuadrante: string;
+  operario: string;
+  correo: string;
+  observaciones: string;
+  calificaciones: Calificaciones;
+  fechaRegistro: string;
+}
+
+// Estado de la aplicación
 export type AppState = {
   user: User | null;
   isAuthenticated: boolean;

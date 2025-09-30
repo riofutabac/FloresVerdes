@@ -25,7 +25,7 @@ export const HomeScreen: React.FC<Props> = ({
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   // 🎯 Navegación específica para cada módulo
-  const onProfileClick = () => console.log('Perfil');
+  const onProfileClick = () => navigation.navigate('Profile');
   const onCosechaClick = () => navigation.navigate('EvaluacionCosecha');
   const onPostcosechaClick = () => console.log('Postcosecha - Próximamente');
   const onPruebasClick = () => console.log('Pruebas - Próximamente');

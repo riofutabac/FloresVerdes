@@ -3,12 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { EvaluacionSubprocesosScreen } from '../screens/Cosecha';
-
-// 🎯 Definir tipos de navegación
-export type RootStackParamList = {
-  Home: undefined;
-  EvaluacionCosecha: undefined;
-};
+import { ProfileScreen } from '../screens/ProfileScreen';
+import { RootStackParamList } from '../types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -40,6 +36,13 @@ export const AppNavigator: React.FC = () => {
           component={EvaluacionSubprocesosScreen}
           options={{
             title: '🌾 Evaluación de Cosecha',
+          }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            title: '👤 Mi Perfil',
           }}
         />
       </Stack.Navigator>

@@ -1,2 +1,3 @@
 export { AppNavigator } from './AppNavigator';
-export type { RootStackParamList } from './AppNavigator';
+// Tipos re-exportados desde types centralizados
+export type { RootStackParamList } from '../types';
