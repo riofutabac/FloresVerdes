@@ -10,6 +10,14 @@ export type RootStackParamList = {
   EvaluacionCosecha: undefined;
   Profile: undefined;
   Login: undefined;
+  Administracion: undefined;
+  // Módulos de Administración:
+  GestionUsuarios: undefined;
+  GestionOperarios: undefined;
+  GestionParametros: undefined;
+  GestionVariedades: undefined;
+  GestionSubprocesos: undefined;
+  AsignacionSupervisores: undefined;
   // Futuras pantallas:
   // PostcosechaScreen: undefined;
   // ReportesScreen: { evaluacionId?: string };
@@ -24,10 +32,48 @@ export interface Operario {
   cuadrante: string;
   discapacidad: string;
   fechaIngreso: string;
+  variedad: string; // 🌹 Nueva propiedad para variedad de rosa
+}
+
+// 👨‍💼 SUPERVISOR
+export interface Supervisor {
+  id: string;
+  nombre: string;
+  correo: string;
+  telefono: string;
+  area: string;
+  fechaAsignacion: string;
 }
 
 export interface Calificaciones {
-  [key: string]: 'Alto' | 'Medio' | 'Bajo';
+  [key: string]: 'Cumple' | 'No Cumple';
+}
+
+// ⚖️ PARÁMETRO CON PESO PARA MOTOR DE PUNTUACIÓN
+export interface ParametroConPeso {
+  id: string;
+  nombre: string;
+  peso: number;
+}
+
+// 📊 ESTADO DE EVALUACIÓN DE PARÁMETRO
+export interface EstadoParametro {
+  cumple: boolean;
+  observacion?: string;
+}
+
+// 🎯 EVALUACIÓN CON PUNTUACIÓN
+export interface EvaluacionConPuntuacion {
+  [parametroId: string]: EstadoParametro;
+}
+
+// 📈 RESULTADOS DE PUNTUACIÓN
+export interface ResultadoPuntuacion {
+  puntajeMaximo: number;
+  puntajeObtenido: number;
+  porcentajeCumplimiento: number;
+  parametrosNoCumplidos: string[];
+  parametrosCumplidos: string[];
 }
 
 export interface EvaluacionLocal {

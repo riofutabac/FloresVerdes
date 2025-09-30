@@ -8,23 +8,27 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-import { Button, Input, Select } from '../../components';
+import { Button, Input, Select, MotorPuntuacion } from '../../components';
 import { 
   MOCK_OPERARIOS, 
   AREAS_OPTIONS, 
   PARAMETROS_ENMALLADO, 
-  PARAMETROS_CUADRANTE 
+  PARAMETROS_CUADRANTE,
+  VARIEDADES_ROSAS,
+  MOCK_SUPERVISORES
 } from '../../data';
-import { Operario, Calificaciones } from '../../types';
+import { Operario, Calificaciones, EvaluacionConPuntuacion, ParametroConPeso, Supervisor } from '../../types';
 
 export const EvaluacionSubprocesosScreen: React.FC = () => {
   // 🎯 ESTADOS
   const [selectedArea, setSelectedArea] = useState<string>('');
   const [codigoCuadrante, setCodigoCuadrante] = useState<string>('');
   const [operario, setOperario] = useState<Operario | null>(null);
+  const [supervisor, setSupervisor] = useState<Supervisor | null>(null);
   const [observaciones, setObservaciones] = useState<string>('');
   const [mensajeError, setMensajeError] = useState<string | null>(null);
   const [calificaciones, setCalificaciones] = useState<Calificaciones>({});
+  const [evaluacionPuntuacion, setEvaluacionPuntuacion] = useState<EvaluacionConPuntuacion>({});
 
   // 🔍 BUSCAR OPERARIO (MOCK)
   const buscarOperario = () => {
@@ -48,10 +52,16 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
 
     if (operarioEncontrado) {
       setOperario(operarioEncontrado);
+      
+      // 👨‍💼 BUSCAR SUPERVISOR DEL ÁREA
+      const supervisorAsignado = MOCK_SUPERVISORES.find(sup => sup.area === selectedArea);
+      setSupervisor(supervisorAsignado || null);
+      
       setMensajeError(null);
       Alert.alert('✅ Éxito', 'Operario verificado correctamente');
     } else {
       setOperario(null);
+      setSupervisor(null);
       setMensajeError('No se encontró operario para ese cuadrante.');
     }
   };
@@ -73,6 +83,9 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
       cuadrante: codigoCuadrante.toUpperCase(),
       operario: operario?.nombre,
       correo: operario?.correo,
+      variedad: operario?.variedad,
+      supervisor: supervisor?.nombre,
+      supervisorCorreo: supervisor?.correo,
       observaciones,
       calificaciones,
       fechaRegistro: new Date().toISOString(),
@@ -138,17 +151,54 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
               <Text style={styles.operarioInfo}>📧 Correo: {operario.correo}</Text>
               <Text style={styles.operarioInfo}>📅 Fecha de ingreso: {operario.fechaIngreso}</Text>
               <Text style={styles.operarioInfo}>♿ Discapacidad: {operario.discapacidad}</Text>
+              
+              {/* 🌹 VARIEDAD DE ROSA ASIGNADA */}
+              <View style={styles.variedadContainer}>
+                <Text style={styles.variedadTitle}>🌹 Variedad Asignada</Text>
+                <View style={styles.variedadInfo}>
+                  <View 
+                    style={[
+                      styles.colorIndicator, 
+                      { backgroundColor: VARIEDADES_ROSAS.find(v => v.value === operario.variedad)?.color || '#CCCCCC' }
+                    ]} 
+                  />
+                  <Text style={styles.variedadNombre}>{operario.variedad}</Text>
+                  <Text style={styles.variedadTipo}>
+                    ({VARIEDADES_ROSAS.find(v => v.value === operario.variedad)?.tipo || 'Sin tipo'})
+                  </Text>
+                </View>
+              </View>
             </View>
           )}
 
-          {/* 📊 EVALUACIONES */}
+          {/* �‍💼 INFORMACIÓN DEL SUPERVISOR */}
+          {supervisor && (
+            <View style={styles.supervisorCard}>
+              <Text style={styles.supervisorTitle}>👨‍💼 Supervisor Asignado</Text>
+              <Text style={styles.supervisorInfo}>Nombre: {supervisor.nombre}</Text>
+              <Text style={styles.supervisorInfo}>📧 Correo: {supervisor.correo}</Text>
+              <Text style={styles.supervisorInfo}>📱 Teléfono: {supervisor.telefono}</Text>
+              <Text style={styles.supervisorInfo}>📅 Asignado desde: {supervisor.fechaAsignacion}</Text>
+            </View>
+          )}
+
+          {/* �📊 EVALUACIONES */}
           {operario && (
             <>
+              {/* ⚖️ MOTOR DE PUNTUACIÓN */}
+              <MotorPuntuacion
+                parametrosEnmallado={PARAMETROS_ENMALLADO}
+                parametrosCuadrante={PARAMETROS_CUADRANTE}
+                evaluacion={evaluacionPuntuacion}
+              />
+
               <ExpandableEvaluation
                 title="Enmallado"
                 parametros={PARAMETROS_ENMALLADO}
                 calificaciones={calificaciones}
                 setCalificaciones={setCalificaciones}
+                evaluacionPuntuacion={evaluacionPuntuacion}
+                setEvaluacionPuntuacion={setEvaluacionPuntuacion}
               />
 
               <ExpandableEvaluation
@@ -156,6 +206,8 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
                 parametros={PARAMETROS_CUADRANTE}
                 calificaciones={calificaciones}
                 setCalificaciones={setCalificaciones}
+                evaluacionPuntuacion={evaluacionPuntuacion}
+                setEvaluacionPuntuacion={setEvaluacionPuntuacion}
               />
 
               <Input
@@ -196,9 +248,11 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
 // 📊 COMPONENTE DE EVALUACIÓN EXPANDIBLE
 interface ExpandableEvaluationProps {
   title: string;
-  parametros: string[];
+  parametros: ParametroConPeso[];
   calificaciones: Calificaciones;
   setCalificaciones: (calificaciones: Calificaciones) => void;
+  evaluacionPuntuacion: EvaluacionConPuntuacion;
+  setEvaluacionPuntuacion: (evaluacion: EvaluacionConPuntuacion) => void;
 }
 
 const ExpandableEvaluation: React.FC<ExpandableEvaluationProps> = ({
@@ -206,28 +260,45 @@ const ExpandableEvaluation: React.FC<ExpandableEvaluationProps> = ({
   parametros,
   calificaciones,
   setCalificaciones,
+  evaluacionPuntuacion,
+  setEvaluacionPuntuacion,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredParams = parametros.filter(param =>
-    param.toLowerCase().includes(searchQuery.toLowerCase())
+    param.nombre.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleCalificacion = (parametro: string, calificacion: 'Alto' | 'Medio' | 'Bajo') => {
-    const key = `${title} - ${parametro}`;
-    const calificacionActual = calificaciones[key];
+  const handleCalificacion = (parametro: ParametroConPeso) => {
+    const key = `${title} - ${parametro.nombre}`;
     
-    // 🎯 TOGGLE: Si ya está seleccionado el mismo nivel, lo deselecciona
-    if (calificacionActual === calificacion) {
+    // 🎯 TOGGLE: Si ya está marcado como "No Cumple", lo deselecciona (vuelve a cumplir)
+    const yaEstaSeleccionado = evaluacionPuntuacion[parametro.id];
+    
+    if (yaEstaSeleccionado) {
+      // Deseleccionar - vuelve a cumplir (estado por defecto)
       const nuevasCalificaciones = { ...calificaciones };
-      delete nuevasCalificaciones[key]; // Quitar la calificación
+      delete nuevasCalificaciones[key];
       setCalificaciones(nuevasCalificaciones);
+      
+      const nuevaEvaluacion = { ...evaluacionPuntuacion };
+      delete nuevaEvaluacion[parametro.id];
+      setEvaluacionPuntuacion(nuevaEvaluacion);
     } else {
-      // Seleccionar nueva calificación
+      // Seleccionar como "No Cumple"
       setCalificaciones({
         ...calificaciones,
-        [key]: calificacion,
+        [key]: 'No Cumple',
+      });
+      
+      // 🎯 ACTUALIZAR PUNTUACIÓN - Marcado como no cumplido
+      setEvaluacionPuntuacion({
+        ...evaluacionPuntuacion,
+        [parametro.id]: {
+          cumple: false,
+          observacion: 'Parámetro no cumplido',
+        },
       });
     }
   };
@@ -263,25 +334,35 @@ const ExpandableEvaluation: React.FC<ExpandableEvaluationProps> = ({
             <Text style={styles.noResults}>Sin coincidencias</Text>
           ) : (
             filteredParams.map((parametro, index) => {
-              const key = `${title} - ${parametro}`;
-              const calificacionSeleccionada = calificaciones[key];
+              const key = `${title} - ${parametro.nombre}`;
+              const yaNoFcumple = evaluacionPuntuacion[parametro.id];
+              const estaSeleccionado = !!yaNoFcumple;
 
               return (
-                <View key={index} style={styles.parametroRow}>
-                  <Text style={styles.parametroText}>{parametro}</Text>
+                <View key={parametro.id} style={styles.parametroRow}>
+                  <View style={styles.parametroHeader}>
+                    <Text style={styles.parametroText}>{parametro.nombre}</Text>
+                    <Text style={styles.pesoText}>Peso: {parametro.peso}</Text>
+                  </View>
                   
                   <View style={styles.calificacionButtons}>
-                    {(['Alto', 'Medio', 'Bajo'] as const).map((nivel) => (
-                      <Button
-                        key={nivel}
-                        title={nivel}
-                        variant={calificacionSeleccionada === nivel ? 'primary' : 'outline'}
-                        size="small"
-                        onPress={() => handleCalificacion(parametro, nivel)}
-                        style={styles.calificacionButton}
-                      />
-                    ))}
+                    <Button
+                      title={estaSeleccionado ? "❌ No Cumple (Seleccionado)" : "❌ Marcar como No Cumple"}
+                      variant={estaSeleccionado ? 'primary' : 'outline'}
+                      size="small"
+                      onPress={() => handleCalificacion(parametro)}
+                      style={styles.calificacionButton}
+                    />
                   </View>
+                  
+                  {/* 📊 INDICADOR DE IMPACTO EN PUNTAJE */}
+                  {estaSeleccionado && (
+                    <View style={styles.estadoContainer}>
+                      <Text style={[styles.estadoTexto, { color: '#F44336' }]}>
+                        ❌ -{parametro.peso} puntos (No cumple)
+                      </Text>
+                    </View>
+                  )}
                 </View>
               );
             })
@@ -351,6 +432,67 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 4,
   },
+  variedadContainer: {
+    marginTop: 12,
+    padding: 12,
+    backgroundColor: '#F9F9F9',
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#4CAF50',
+  },
+  variedadTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#2E7D32',
+    marginBottom: 8,
+  },
+  variedadInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  colorIndicator: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: '#DDD',
+  },
+  variedadNombre: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginRight: 8,
+  },
+  variedadTipo: {
+    fontSize: 12,
+    color: '#666',
+    fontStyle: 'italic',
+  },
+  supervisorCard: {
+    backgroundColor: '#E3F2FD',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderLeftWidth: 4,
+    borderLeftColor: '#2196F3',
+  },
+  supervisorTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1976D2',
+    marginBottom: 8,
+  },
+  supervisorInfo: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 4,
+  },
   evaluationCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
@@ -394,18 +536,35 @@ const styles = StyleSheet.create({
   parametroRow: {
     marginBottom: 16,
   },
+  parametroHeader: {
+    marginBottom: 8,
+  },
   parametroText: {
     fontSize: 14,
     color: '#333',
-    marginBottom: 8,
+    marginBottom: 4,
+  },
+  pesoText: {
+    fontSize: 12,
+    color: '#666',
+    fontWeight: 'bold',
   },
   calificacionButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginBottom: 8,
   },
   calificacionButton: {
     flex: 1,
     marginHorizontal: 4,
+  },
+  estadoContainer: {
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  estadoTexto: {
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   actionButtons: {
     marginTop: 24,

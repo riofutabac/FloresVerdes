@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { EvaluacionSubprocesosScreen } from '../screens/Cosecha';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { AdministracionScreen, GestionUsuariosScreen } from '../screens/Administracion';
 import { RootStackParamList } from '../types';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -43,6 +44,20 @@ export const AppNavigator: React.FC = () => {
           component={ProfileScreen}
           options={{
             title: '👤 Mi Perfil',
+          }}
+        />
+        <Stack.Screen
+          name="Administracion"
+          component={AdministracionScreen}
+          options={{
+            title: '⚙️ Administración',
+          }}
+        />
+        <Stack.Screen
+          name="GestionUsuarios"
+          component={GestionUsuariosScreen}
+          options={{
+            title: '👥 Gestión de Usuarios',
           }}
         />
       </Stack.Navigator>

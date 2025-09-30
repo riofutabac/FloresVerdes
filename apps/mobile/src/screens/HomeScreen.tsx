@@ -30,7 +30,7 @@ export const HomeScreen: React.FC<Props> = ({
   const onPostcosechaClick = () => console.log('Postcosecha - Próximamente');
   const onPruebasClick = () => console.log('Pruebas - Próximamente');
   const onDevolucionesClick = () => console.log('Devoluciones - Próximamente');
-  const onAdminClick = () => console.log('Administración - Próximamente');
+  const onAdminClick = () => navigation.navigate('Administracion');
   const onReportesClick = () => console.log('Reportes/KPIs - Próximamente');
   return (
     <SafeAreaView style={styles.container}>
