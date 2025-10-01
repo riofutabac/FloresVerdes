@@ -25,7 +25,7 @@ interface InputProps {
   style?: ViewStyle;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input: React.FC<InputProps> = React.memo(({
   label,
   value,
   onChangeText,
@@ -105,7 +105,7 @@ export const Input: React.FC<InputProps> = ({
       )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

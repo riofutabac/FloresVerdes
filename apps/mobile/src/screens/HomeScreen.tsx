@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -24,14 +24,14 @@ export const HomeScreen: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  // 🎯 Navegación específica para cada módulo
-  const onProfileClick = () => navigation.navigate('Profile');
-  const onCosechaClick = () => navigation.navigate('EvaluacionCosecha');
-  const onPostcosechaClick = () => console.log('Postcosecha - Próximamente');
-  const onPruebasClick = () => console.log('Pruebas - Próximamente');
-  const onDevolucionesClick = () => console.log('Devoluciones - Próximamente');
-  const onAdminClick = () => navigation.navigate('Administracion');
-  const onReportesClick = () => console.log('Reportes/KPIs - Próximamente');
+  // 🎯 Navegación específica para cada módulo (memoizada)
+  const onProfileClick = useCallback(() => navigation.navigate('Profile'), [navigation]);
+  const onCosechaClick = useCallback(() => navigation.navigate('EvaluacionCosecha'), [navigation]);
+  const onPostcosechaClick = useCallback(() => console.log('Postcosecha - Próximamente'), []);
+  const onPruebasClick = useCallback(() => console.log('Pruebas - Próximamente'), []);
+  const onDevolucionesClick = useCallback(() => console.log('Devoluciones - Próximamente'), []);
+  const onAdminClick = useCallback(() => navigation.navigate('Administracion'), [navigation]);
+  const onReportesClick = useCallback(() => console.log('Reportes/KPIs - Próximamente'), []);
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground

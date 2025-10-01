@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Input, Select } from '../components';
+import { useAppStore } from '../store';
 
 const IDIOMAS_OPTIONS = [
   { label: '🇪🇸 Español', value: 'es' },
@@ -17,6 +18,7 @@ const IDIOMAS_OPTIONS = [
 
 export const ProfileScreen: React.FC = () => {
   const navigation = useNavigation();
+  const { user, logout } = useAppStore();
   
   // 🎯 ESTADOS
   const [idiomaSeleccionado, setIdiomaSeleccionado] = useState('es');
@@ -25,12 +27,14 @@ export const ProfileScreen: React.FC = () => {
   const [passwordNueva, setPasswordNueva] = useState('');
   const [confirmarPassword, setConfirmarPassword] = useState('');
 
-  // 👤 DATOS MOCK DEL USUARIO
+  // 👤 DATOS DEL USUARIO AUTENTICADO
   const usuario = {
-    nombre: 'Francisco',
-    correo: 'francisco@floresverdes.com',
-    fechaIngreso: '2023-01-15',
-    rol: 'Operario Senior'
+    nombre: user?.name || 'Usuario',
+    correo: user?.email || 'usuario@floresverdes.com',
+    fechaIngreso: user?.created_at ? new Date(user.created_at).toLocaleDateString() : '2023-01-15',
+    rol: user?.role === 'admin' ? 'Administrador' : 
+         user?.role === 'gerente' ? 'Gerente' : 
+         user?.role === 'jefe_calidad' ? 'Jefe de Calidad' : 'Usuario'
   };
 
   // 🔐 CERRAR SESIÓN
@@ -47,10 +51,8 @@ export const ProfileScreen: React.FC = () => {
           text: 'Cerrar Sesión',
           style: 'destructive',
           onPress: () => {
-            // 🎭 Mock - En el futuro conectar con auth real
-            console.log('🔐 Cerrando sesión...');
+            logout();
             Alert.alert('✅ Sesión Cerrada', 'Has cerrado sesión exitosamente');
-            // navigation.navigate('Login'); // Futuro
           }
         }
       ]

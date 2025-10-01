@@ -1,5 +1,5 @@
 // Tipos base del usuario
-export type UserRole = "admin" | "operario" | "gerente";
+export type UserRole = "admin" | "jefe_calidad" | "gerente";
 
 export type User = {
   id: string;

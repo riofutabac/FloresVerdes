@@ -11,7 +11,7 @@ interface AppStore extends AppState {
 
 export const useAppStore = create<AppStore>((set) => ({
   user: null,
-  isAuthenticated: false,
+  isAuthenticated: false, // Empezar sin autenticación
   isOnline: true,
   syncStatus: 'idle',
   

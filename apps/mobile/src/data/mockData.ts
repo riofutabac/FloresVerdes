@@ -1,4 +1,35 @@
-import { Operario, ParametroConPeso, Supervisor } from '../types';
+import { Operario, ParametroConPeso, Supervisor, User } from '../types';
+
+// 🎭 USUARIOS MOCK - Para autenticación de prueba
+export const MOCK_USUARIOS: (User & { contraseña: string })[] = [
+  {
+    id: '1',
+    email: 'admin@floresverdes.com',
+    name: 'Administrador Principal',
+    role: 'admin',
+    created_at: '2023-01-01T00:00:00Z',
+    updated_at: '2023-01-01T00:00:00Z',
+    contraseña: 'admin123'
+  },
+  {
+    id: '2', 
+    email: 'gerente@floresverdes.com',
+    name: 'Gerente de Operaciones',
+    role: 'gerente',
+    created_at: '2023-01-01T00:00:00Z',
+    updated_at: '2023-01-01T00:00:00Z',
+    contraseña: 'gerente123'
+  },
+  {
+    id: '3',
+    email: 'jefe.calidad@floresverdes.com', 
+    name: 'Juan Pérez',
+    role: 'jefe_calidad',
+    created_at: '2023-01-15T00:00:00Z',
+    updated_at: '2023-01-15T00:00:00Z',
+    contraseña: 'calidad123'
+  }
+];
 
 // 🎭 OPERARIOS MOCK - Datos de prueba
 export const MOCK_OPERARIOS: Operario[] = [
