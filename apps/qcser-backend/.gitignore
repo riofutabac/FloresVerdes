@@ -1,0 +1,41 @@
+# Dependencias
+/node_modules
+/package-lock.json
+/pnpm-lock.yaml
+/yarn.lock
+
+# Compilados de TypeScript
+/dist
+/tsconfig.build.tsbuildinfo
+
+# Archivos de entorno
+.env
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Cobertura / tests
+/coverage
+/.nyc_output
+/jest
+/junit.xml
+
+# Cachés
+/.cache
+/.eslintcache
+/.tsbuildinfo
+
+# Docker
+/docker-compose.override.yml
+*.local.yml
+
+# IDEs / SO
+.vscode
+.idea
+.DS_Store
+Thumbs.db
