@@ -39,7 +39,7 @@ CREATE TABLE areas (
 CREATE TABLE modules (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    code VARCHAR(10) UNIQUE NOT NULL,
+    code VARCHAR(10) NOT NULL,
     description TEXT,
     area_id INTEGER REFERENCES areas(id),
     is_active BOOLEAN DEFAULT true,
