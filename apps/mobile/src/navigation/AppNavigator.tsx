@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { EvaluacionSubprocesosScreen } from '../screens/Cosecha';
 import { ProfileScreen } from '../screens/ProfileScreen';
-import { AdministracionScreen, GestionUsuariosScreen } from '../screens/Administracion';
+import { AdministracionScreen, GestionUsuariosScreen, GestionOperariosScreen, GestionParametrosScreen, GestionVariedadesScreen, AsignacionSupervisoresScreen } from '../screens/Administracion';
+import { ReportesScreen, ReportesIndividualesScreen, ReportesGeneralesScreen, ExportarReportesScreen } from '../screens/reportes';
 import { LoginScreen } from '../screens/Auth';
 import { useAuth } from '../hooks';
 import { RootStackParamList } from '../types';
@@ -79,6 +80,62 @@ export const AppNavigator: React.FC = () => {
               component={GestionUsuariosScreen}
               options={{
                 title: '👥 Gestión de Usuarios',
+              }}
+            />
+            <Stack.Screen
+              name="GestionOperarios"
+              component={GestionOperariosScreen}
+              options={{
+                title: '👷 Gestión de Operarios',
+              }}
+            />
+            <Stack.Screen
+              name="GestionParametros"
+              component={GestionParametrosScreen}
+              options={{
+                title: '⚖️ Gestión de Parámetros',
+              }}
+            />
+            <Stack.Screen
+              name="GestionVariedades"
+              component={GestionVariedadesScreen}
+              options={{
+                title: '🌹 Gestión de Variedades',
+              }}
+            />
+            <Stack.Screen
+              name="AsignacionSupervisores"
+              component={AsignacionSupervisoresScreen}
+              options={{
+                title: '👨‍💼 Asignación de Supervisores',
+              }}
+            />
+            <Stack.Screen
+              name="Reportes"
+              component={ReportesScreen}
+              options={{
+                title: '📊 Reportes',
+              }}
+            />
+            <Stack.Screen
+              name="ReportesIndividuales"
+              component={ReportesIndividualesScreen}
+              options={{
+                title: '📊 Reportes Individuales',
+              }}
+            />
+            <Stack.Screen
+              name="ReportesGenerales"
+              component={ReportesGeneralesScreen}
+              options={{
+                title: '📈 Reportes Generales',
+              }}
+            />
+            <Stack.Screen
+              name="ExportarReportes"
+              component={ExportarReportesScreen}
+              options={{
+                title: '💾 Exportar Reportes',
               }}
             />
           </>

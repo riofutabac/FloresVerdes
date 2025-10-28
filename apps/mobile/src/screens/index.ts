@@ -11,8 +11,10 @@ export * from './Cosecha';
 // Pantallas de Administración
 export * from './Administracion';
 
+// Pantallas de Reportes
+export * from './reportes';
+
 // Aquí puedes agregar más pantallas conforme las vayas creando:
 // export * from './Postcosecha';
 // export * from './Pruebas';
 // export * from './Devoluciones';
-// export * from './Reportes';

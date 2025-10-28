@@ -169,15 +169,13 @@ export const GestionUsuariosScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>👥 Gestión de Usuarios</Text>
-
         {/* 🔍 BÚSQUEDA Y FILTROS */}
         <View style={styles.filtersContainer}>
           <Input
             label="Buscar usuarios"
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Buscar por nombre o correo..."
+            placeholder="Buscar usuario..."
             icon="🔍"
           />
           

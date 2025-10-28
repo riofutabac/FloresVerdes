@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation';
+import { useAuth } from '../hooks';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -20,9 +21,15 @@ interface Props {
 }
 
 export const HomeScreen: React.FC<Props> = ({
-  userName = "Francisco",
+  userName,
 }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const { user } = useAuth();
+
+  // ⚡ Obtener nombre del usuario autenticado
+  const displayName = useMemo(() => {
+    return userName || user?.name?.split(' ')[0] || 'Usuario';
+  }, [userName, user?.name]);
 
   // 🎯 Navegación específica para cada módulo (memoizada)
   const onProfileClick = useCallback(() => navigation.navigate('Profile'), [navigation]);
@@ -31,7 +38,7 @@ export const HomeScreen: React.FC<Props> = ({
   const onPruebasClick = useCallback(() => console.log('Pruebas - Próximamente'), []);
   const onDevolucionesClick = useCallback(() => console.log('Devoluciones - Próximamente'), []);
   const onAdminClick = useCallback(() => navigation.navigate('Administracion'), [navigation]);
-  const onReportesClick = useCallback(() => console.log('Reportes/KPIs - Próximamente'), []);
+  const onReportesClick = useCallback(() => navigation.navigate('Reportes'), [navigation]);
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -47,7 +54,7 @@ export const HomeScreen: React.FC<Props> = ({
             {/* Header con saludo y perfil */}
             <View style={styles.header}>
               <Text style={styles.welcomeText}>
-                Listo para trabajar, {userName}
+                Listo para trabajar, {displayName}
               </Text>
               <TouchableOpacity onPress={onProfileClick} style={styles.profileButton}>
                 <Text style={styles.profileIcon}>👤</Text>
@@ -125,14 +132,14 @@ interface ModuleCardProps {
   onPress: () => void;
 }
 
-const ModuleCard: React.FC<ModuleCardProps> = ({ icon, label, backgroundColor, onPress }) => {
+const ModuleCard: React.FC<ModuleCardProps> = React.memo(({ icon, label, backgroundColor, onPress }) => {
   return (
     <TouchableOpacity style={[styles.moduleCard, { backgroundColor }]} onPress={onPress}>
       <Text style={styles.moduleIcon}>{icon}</Text>
       <Text style={styles.moduleLabel}>{label}</Text>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

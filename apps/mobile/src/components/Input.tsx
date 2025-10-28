@@ -44,25 +44,42 @@ export const Input: React.FC<InputProps> = React.memo(({
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(!secureTextEntry);
 
-  const togglePasswordVisibility = () => {
+  // ⚡ Memoizar funciones para evitar re-renders
+  const togglePasswordVisibility = React.useCallback(() => {
     setShowPassword(!showPassword);
-  };
+  }, [showPassword]);
+
+  const handleFocus = React.useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleBlur = React.useCallback(() => {
+    setIsFocused(false);
+  }, []);
+
+  // ⚡ Memoizar estilos del container
+  const inputContainerStyle = React.useMemo(() => [
+    styles.inputContainer,
+    isFocused && styles.inputFocused,
+    error && styles.inputError,
+    disabled && styles.inputDisabled,
+  ], [isFocused, error, disabled]);
+
+  // ⚡ Memoizar texto del label
+  const labelText = React.useMemo(() => {
+    return icon ? `${icon} ${label}` : label;
+  }, [icon, label]);
 
   return (
     <View style={[styles.container, style]}>
       <View style={styles.labelContainer}>
         <Text style={styles.label}>
-          {icon && `${icon} `}{label}
+          {labelText}
           {required && <Text style={styles.required}> *</Text>}
         </Text>
       </View>
       
-      <View style={[
-        styles.inputContainer,
-        isFocused && styles.inputFocused,
-        error && styles.inputError,
-        disabled && styles.inputDisabled,
-      ]}>
+      <View style={inputContainerStyle}>
         <TextInput
           style={[
             styles.input,
@@ -78,14 +95,24 @@ export const Input: React.FC<InputProps> = React.memo(({
           numberOfLines={multiline ? numberOfLines : 1}
           editable={!disabled}
           maxLength={maxLength}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          accessibilityLabel={label}
+          accessibilityHint={placeholder}
+          accessibilityState={{ 
+            disabled,
+            selected: isFocused 
+          }}
+          testID={`input-${label.toLowerCase().replace(/\s+/g, '-')}`}
         />
         
         {secureTextEntry && (
           <TouchableOpacity
             style={styles.eyeButton}
             onPress={togglePasswordVisibility}
+            accessibilityRole="button"
+            accessibilityLabel={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+            testID="password-toggle"
           >
             <Text style={styles.eyeIcon}>
               {showPassword ? '👁️' : '🙈'}
@@ -95,7 +122,9 @@ export const Input: React.FC<InputProps> = React.memo(({
       </View>
       
       {error && (
-        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.errorText} accessibilityRole="alert">
+          {error}
+        </Text>
       )}
       
       {maxLength && (

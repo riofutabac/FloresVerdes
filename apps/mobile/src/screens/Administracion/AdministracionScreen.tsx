@@ -51,14 +51,6 @@ export const AdministracionScreen: React.FC = () => {
       screen: 'GestionVariedades' as keyof RootStackParamList,
     },
     {
-      id: 'subprocesos',
-      title: 'Gestión de Subprocesos',
-      subtitle: 'Definir y activar/desactivar subprocesos',
-      icon: '🔄',
-      color: '#9C27B0',
-      screen: 'GestionSubprocesos' as keyof RootStackParamList,
-    },
-    {
       id: 'supervisores',
       title: 'Asignación de Supervisores',
       subtitle: 'Asociar supervisores a áreas',
@@ -71,6 +63,14 @@ export const AdministracionScreen: React.FC = () => {
   const handleModulePress = (screen: keyof RootStackParamList) => {
     if (screen === 'GestionUsuarios') {
       navigation.navigate('GestionUsuarios');
+    } else if (screen === 'GestionOperarios') {
+      navigation.navigate('GestionOperarios');
+    } else if (screen === 'GestionParametros') {
+      navigation.navigate('GestionParametros');
+    } else if (screen === 'GestionVariedades') {
+      navigation.navigate('GestionVariedades');
+    } else if (screen === 'AsignacionSupervisores') {
+      navigation.navigate('AsignacionSupervisores');
     } else {
       // Por ahora solo mostramos un alert para los otros módulos
       Alert.alert(
@@ -90,9 +90,6 @@ export const AdministracionScreen: React.FC = () => {
     >
       <ScrollView style={styles.container}>
         <View style={styles.overlay}>
-          <Text style={styles.title}>⚙️ Administración</Text>
-          <Text style={styles.subtitle}>Panel de control del sistema</Text>
-
           {/* 🎛️ MÓDULOS DE ADMINISTRACIÓN */}
           <View style={styles.modulesGrid}>
             {modulosAdministracion.map((modulo) => (

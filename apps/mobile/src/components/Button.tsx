@@ -28,7 +28,8 @@ export const Button: React.FC<ButtonProps> = React.memo(({
   fullWidth = false,
   style,
 }) => {
-  const getButtonStyle = () => {
+  // ⚡ Memoizar estilos para evitar recalculaciones
+  const buttonStyle = React.useMemo(() => {
     const baseStyle: any[] = [styles.button, styles[`${variant}Button`], styles[`${size}Button`]];
     
     if (fullWidth) baseStyle.push(styles.fullWidth);
@@ -36,21 +37,29 @@ export const Button: React.FC<ButtonProps> = React.memo(({
     if (style) baseStyle.push(style);
     
     return baseStyle;
-  };
+  }, [variant, size, fullWidth, disabled, style]);
 
-  const getTextStyle = () => {
+  const textStyle = React.useMemo(() => {
     return [styles.text, styles[`${variant}Text`], styles[`${size}Text`]];
-  };
+  }, [variant, size]);
+
+  // ⚡ Memoizar texto para evitar re-renders innecesarios
+  const buttonText = React.useMemo(() => {
+    return icon ? `${icon} ${title}` : title;
+  }, [icon, title]);
 
   return (
     <TouchableOpacity
-      style={getButtonStyle()}
+      style={buttonStyle}
       onPress={onPress}
       disabled={disabled}
       activeOpacity={0.8}
+      accessibilityRole="button"
+      accessibilityLabel={title}
+      accessibilityState={{ disabled }}
     >
-      <Text style={getTextStyle()}>
-        {icon && `${icon} `}{title}
+      <Text style={textStyle}>
+        {buttonText}
       </Text>
     </TouchableOpacity>
   );

@@ -47,7 +47,9 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
     // 🎭 Simulación de búsqueda en datos mock
     const operarioEncontrado = MOCK_OPERARIOS.find(
       op => op.area === selectedArea && 
-      op.cuadrante.toLowerCase() === codigo.toLowerCase()
+      op.cuadrante && // ✅ Verificar que cuadrante existe
+      op.cuadrante.toLowerCase() === codigo.toLowerCase() &&
+      op.proceso === 'Cosecha' // ✅ Solo buscar operarios de cosecha
     );
 
     if (operarioEncontrado) {
@@ -62,7 +64,7 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
     } else {
       setOperario(null);
       setSupervisor(null);
-      setMensajeError('No se encontró operario para ese cuadrante.');
+      setMensajeError('No se encontró operario de COSECHA para ese cuadrante en esta área.');
     }
   };
 
@@ -109,8 +111,6 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
     >
       <ScrollView style={styles.container}>
         <View style={styles.overlay}>
-          <Text style={styles.title}>Evaluación de Cosecha</Text>
-
           {/* 📋 SELECCIÓN DE ÁREA Y CUADRANTE */}
           <View style={styles.card}>
             <Select
@@ -227,14 +227,6 @@ export const EvaluacionSubprocesosScreen: React.FC = () => {
                   size="large"
                   fullWidth
                   onPress={guardarEvaluacion}
-                />
-                
-                <Button
-                  title="📊 Revisar Reportes"
-                  variant="secondary"
-                  size="large"
-                  fullWidth
-                  onPress={() => Alert.alert('📊 Reportes', 'Navegando a reportes...')}
                 />
               </View>
             </>

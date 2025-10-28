@@ -16,11 +16,15 @@ export type RootStackParamList = {
   GestionOperarios: undefined;
   GestionParametros: undefined;
   GestionVariedades: undefined;
-  GestionSubprocesos: undefined;
   AsignacionSupervisores: undefined;
+  // Módulo de Reportes:
+  Reportes: undefined;
+  ReportesIndividuales: undefined;
+  ReportesGenerales: undefined;
+  ExportarReportes: undefined;
+  DashboardReportes: undefined;
   // Futuras pantallas:
   // PostcosechaScreen: undefined;
-  // ReportesScreen: { evaluacionId?: string };
 };
 
 // Evaluaciones - Frontend específico
@@ -28,11 +32,18 @@ export interface Operario {
   id: string;
   nombre: string;
   correo: string;
-  area: string;
-  cuadrante: string;
   discapacidad: string;
   fechaIngreso: string;
   variedad: string; // 🌹 Nueva propiedad para variedad de rosa
+  proceso: 'Cosecha' | 'Postcosecha'; // 🏭 Proceso al que pertenece el operario
+  
+  // 🌾 CAMPOS ESPECÍFICOS DE COSECHA
+  area?: string; // Solo para cosecha
+  cuadrante?: string; // Solo para cosecha
+  
+  // 📦 CAMPOS ESPECÍFICOS DE POSTCOSECHA  
+  mesa?: string; // Solo para postcosecha (Ej: Mesa 1, Mesa 2, etc.)
+  rol?: 'Clasificador' | 'Bonchador'; // Solo para postcosecha
 }
 
 // 👨‍💼 SUPERVISOR
@@ -85,6 +96,81 @@ export interface EvaluacionLocal {
   observaciones: string;
   calificaciones: Calificaciones;
   fechaRegistro: string;
+}
+
+// 📊 EVALUACIÓN COMPLETA GUARDADA
+export interface EvaluacionGuardada {
+  id: string;
+  operarioId: string;
+  operarioNombre: string;
+  area: string;
+  cuadrante?: string; // Cosecha
+  mesa?: string; // Postcosecha
+  variedad: string;
+  proceso: 'Cosecha' | 'Postcosecha';
+  subproceso: string; // Ej: "Enmallado", "Clasificación", etc.
+  evaluacion: EvaluacionConPuntuacion;
+  resultado: ResultadoPuntuacion;
+  observaciones: string;
+  fechaRegistro: string;
+  evaluadorId: string;
+  evaluadorNombre: string;
+}
+
+// 📈 REPORTE INDIVIDUAL POR OPERARIO
+export interface ReporteIndividual {
+  operarioId: string;
+  operarioNombre: string;
+  cuadrante: string;
+  variedad: string;
+  area: string;
+  evaluaciones: EvaluacionGuardada[];
+  promedioOperario: number; // Promedio de todas sus evaluaciones
+  objetivo: number; // Siempre 100
+  promedioGeneral: number; // Promedio de todos los operarios
+  totalEvaluaciones: number;
+  fechaInicio: string;
+  fechaFin: string;
+}
+
+// 📊 REPORTE GENERAL
+export interface ReporteGeneral {
+  fechaGeneracion: string;
+  fechaInicio: string;
+  fechaFin: string;
+  totalOperarios: number;
+  totalEvaluaciones: number;
+  promedioGeneral: number;
+  objetivo: number; // 100
+  operariosPorArea: {
+    [area: string]: {
+      cantidad: number;
+      promedio: number;
+    };
+  };
+  tendenciaMensual: {
+    mes: string;
+    promedio: number;
+  }[];
+  mejoresOperarios: {
+    operarioId: string;
+    nombre: string;
+    promedio: number;
+  }[];
+  areasDeRiesgo: {
+    area: string;
+    promedio: number;
+  }[];
+}
+
+// 📄 CONFIGURACIÓN DE EXPORTACIÓN
+export interface ConfiguracionExportacion {
+  tipo: 'PDF' | 'Word';
+  incluirGraficos: boolean;
+  incluirDetalles: boolean;
+  logoEmpresa?: string;
+  nombreEmpresa: string;
+  fechaGeneracion: string;
 }
 
 // Estado de la aplicación
