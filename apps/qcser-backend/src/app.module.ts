@@ -15,6 +15,7 @@ import { MonitoringModule } from './modules/monitoring/monitoring.module';
 import { LoggingModule } from './modules/logging/logging.module';
 import { BackupModule } from './modules/backup/backup.module';
 import { MaintenanceModule } from './modules/maintenance/maintenance.module';
+import { DatabaseModule } from './modules/database/database.module';
 import databaseConfig from './config/database.config';
 import supabaseConfig from './config/supabase.config';
 import jwtConfig from './config/jwt.config';
@@ -29,6 +30,7 @@ import jwtConfig from './config/jwt.config';
       useFactory: databaseConfig,
     }),
     ScheduleModule.forRoot(),
+    DatabaseModule,
     AuthModule,
     OperatorsModule,
     EvaluationsModule,
