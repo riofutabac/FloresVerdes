@@ -1,5 +1,6 @@
 node_modules
 npm-debug.log
+.env
 Dockerfile*
 .dockerignore
 .git
@@ -24,3 +25,4 @@ nginx
 docker-compose*.yml
 migrations
 init-db
+pnpm-lock.yaml
