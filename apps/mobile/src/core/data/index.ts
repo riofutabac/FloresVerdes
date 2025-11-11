@@ -1,9 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_CONFIG } from '@flores-verdes/shared-config';
+import Constants from 'expo-constants';
+
+// Obtener variables de entorno desde Expo
+const supabaseUrl = Constants.expoConfig?.extra?.SUPABASE_URL || process.env.EXPO_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = Constants.expoConfig?.extra?.SUPABASE_ANON_KEY || process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.warn('⚠️ Supabase credentials not configured. Please check your .env file.');
+}
 
 export const supabaseClient = createClient(
-  SUPABASE_CONFIG.URL,
-  SUPABASE_CONFIG.ANON_KEY
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false,
+    },
+  }
 );
 
 export class ApiClient {

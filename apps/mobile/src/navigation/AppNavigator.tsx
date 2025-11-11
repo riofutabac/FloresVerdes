@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { EvaluacionSubprocesosScreen } from '../screens/Cosecha';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { ChangePasswordScreen } from '../screens/Profile';
 import { AdministracionScreen, GestionUsuariosScreen, GestionOperariosScreen, GestionParametrosScreen, GestionVariedadesScreen, AsignacionSupervisoresScreen } from '../screens/Administracion';
 import { ReportesScreen, ReportesIndividualesScreen, ReportesGeneralesScreen, ExportarReportesScreen } from '../screens/reportes';
 import { LoginScreen } from '../screens/Auth';
@@ -66,6 +67,13 @@ export const AppNavigator: React.FC = () => {
               component={ProfileScreen}
               options={{
                 title: '👤 Mi Perfil',
+              }}
+            />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+              options={{
+                title: '🔐 Cambiar Contraseña',
               }}
             />
             <Stack.Screen

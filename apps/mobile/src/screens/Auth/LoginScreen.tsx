@@ -9,12 +9,11 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-  TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Button, Input, Select } from '../../components';
 import { useAppStore } from '../../store';
-import { MOCK_USUARIOS } from '../../data/mockData';
+import { authService } from '../../services/auth.service';
 
 type Props = {
   navigation?: any;
@@ -37,7 +36,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
   // 🏪 STORE
   const { login } = useAppStore();
 
-  // 📲 MANEJO DE LOGIN
+  // 📲 MANEJO DE LOGIN CON SUPABASE
   const handleLogin = async () => {
     // 🔍 VALIDACIONES
     if (!email.trim()) {
@@ -55,37 +54,41 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       return;
     }
 
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Por favor ingresa un correo electrónico válido');
+      return;
+    }
+
     setIsLoading(true);
     setErrorMessage('');
 
-    // 🎭 SIMULACIÓN DE AUTENTICACIÓN (Solo frontend)
-    setTimeout(() => {
-      // Buscar usuario en mock data
-      const authenticatedUser = MOCK_USUARIOS.find(
-        user => user.email.toLowerCase() === email.toLowerCase() && 
-                user.contraseña === password &&
-                user.role === selectedRole
-      );
+    try {
+      // 🔐 AUTENTICACIÓN CON SUPABASE
+      const { user, error } = await authService.login({
+        email: email.trim().toLowerCase(),
+        password: password,
+        role: selectedRole as 'admin' | 'gerente' | 'jefe_calidad',
+      });
 
-      if (authenticatedUser) {
-        // ✅ USUARIO ENCONTRADO
-        const user = {
-          id: authenticatedUser.id,
-          email: authenticatedUser.email,
-          name: authenticatedUser.name,
-          role: selectedRole as 'admin' | 'gerente' | 'jefe_calidad',
-          created_at: authenticatedUser.created_at,
-          updated_at: authenticatedUser.updated_at,
-        };
+      if (error) {
+        // ❌ ERROR EN LOGIN
+        setErrorMessage(error);
+        setIsLoading(false);
+        return;
+      }
 
+      if (user) {
+        // ✅ LOGIN EXITOSO
         login(user);
         
         Alert.alert(
-          '✅ Éxito',
-          'Inicio de sesión exitoso',
+          '✅ Bienvenido',
+          `Hola ${user.name}!\nInicio de sesión exitoso.`,
           [
             {
-              text: 'OK',
+              text: 'Continuar',
               onPress: () => {
                 if (navigation) {
                   navigation.replace('Home');
@@ -94,12 +97,13 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
             }
           ]
         );
-      } else {
-        setErrorMessage('❌ Credenciales incorrectas. Verifica tu correo, contraseña y rol.');
       }
-      
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrorMessage('Error inesperado. Por favor intenta nuevamente.');
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -134,7 +138,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 label="📧 Correo Electrónico"
                 value={email}
                 onChangeText={setEmail}
-                placeholder="Ingresa tu correo"
+                placeholder="ejemplo@floresverdes.com"
                 keyboardType="email-address"
                 style={styles.input}
               />
@@ -156,17 +160,20 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 onSelect={(option) => setSelectedRole(String(option.value))}
                 options={ROLES_OPTIONS}
                 placeholder="Selecciona tu rol"
+                disabled={isLoading}
                 style={styles.input}
               />
 
               {/* ⚠️ MENSAJE DE ERROR */}
               {errorMessage ? (
-                <Text style={styles.errorText}>{errorMessage}</Text>
+                <View style={styles.errorContainer}>
+                  <Text style={styles.errorText}>{errorMessage}</Text>
+                </View>
               ) : null}
 
               {/* 🚀 BOTÓN DE LOGIN */}
               <Button
-                title={isLoading ? 'Iniciando sesión...' : '🚀 Iniciar Sesión'}
+                title={isLoading ? 'Verificando credenciales...' : '🚀 Iniciar Sesión'}
                 onPress={handleLogin}
                 variant="primary"
                 size="large"
@@ -175,17 +182,25 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 style={styles.loginButton}
               />
 
-              {/* 💡 INFORMACIÓN DE PRUEBA */}
-              <View style={styles.testInfo}>
-                <Text style={styles.testInfoTitle}>🧪 Usuarios de Prueba:</Text>
-                <Text style={styles.testInfoText}>
-                  📧 admin@floresverdes.com | 🔒 admin123 | 👤 Administrador
+              {isLoading && (
+                <ActivityIndicator 
+                  size="large" 
+                  color="#2E7D32" 
+                  style={styles.loader}
+                />
+              )}
+
+              {/* 💡 INFORMACIÓN */}
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoTitle}>ℹ️ Información</Text>
+                <Text style={styles.infoText}>
+                  • Usa las credenciales proporcionadas por el administrador
                 </Text>
-                <Text style={styles.testInfoText}>
-                  📧 gerente@floresverdes.com | 🔒 gerente123 | 👤 Gerente
+                <Text style={styles.infoText}>
+                  • Asegúrate de seleccionar el rol correcto
                 </Text>
-                <Text style={styles.testInfoText}>
-                  📧 jefe.calidad@floresverdes.com | 🔒 calidad123 | 👤 Jefe de Calidad
+                <Text style={styles.infoText}>
+                  • Si olvidaste tu contraseña, contacta al administrador
                 </Text>
               </View>
 
@@ -236,23 +251,50 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: '100%',
   },
+  errorContainer: {
+    width: '100%',
+    marginBottom: 16,
+  },
   errorText: {
     color: '#D32F2F',
     fontSize: 14,
     textAlign: 'center',
-    marginBottom: 16,
     paddingHorizontal: 12,
     paddingVertical: 8,
     backgroundColor: 'rgba(255, 235, 238, 0.9)',
     borderRadius: 8,
     borderLeftWidth: 4,
     borderLeftColor: '#D32F2F',
-    width: '100%',
   },
   loginButton: {
     marginTop: 20,
     marginBottom: 20,
     width: '100%',
+  },
+  loader: {
+    marginVertical: 10,
+  },
+  infoContainer: {
+    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(33, 150, 243, 0.3)',
+    width: '100%',
+    marginTop: 20,
+  },
+  infoTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1976D2',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  infoText: {
+    fontSize: 12,
+    color: '#1976D2',
+    marginBottom: 4,
+    paddingLeft: 8,
   },
   testInfo: {
     backgroundColor: 'rgba(46, 125, 50, 0.1)',

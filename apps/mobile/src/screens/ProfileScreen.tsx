@@ -5,11 +5,14 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
-  TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, Input, Select } from '../components';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import { Button, Select } from '../components';
 import { useAppStore } from '../store';
+import type { RootStackParamList } from '../types';
+
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Profile'>;
 
 const IDIOMAS_OPTIONS = [
   { label: '🇪🇸 Español', value: 'es' },
@@ -17,15 +20,11 @@ const IDIOMAS_OPTIONS = [
 ];
 
 export const ProfileScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
   const { user, logout } = useAppStore();
   
   // 🎯 ESTADOS
   const [idiomaSeleccionado, setIdiomaSeleccionado] = useState('es');
-  const [mostrarCambioPassword, setMostrarCambioPassword] = useState(false);
-  const [passwordActual, setPasswordActual] = useState('');
-  const [passwordNueva, setPasswordNueva] = useState('');
-  const [confirmarPassword, setConfirmarPassword] = useState('');
 
   // 👤 DATOS DEL USUARIO AUTENTICADO
   const usuario = {
@@ -66,32 +65,9 @@ export const ProfileScreen: React.FC = () => {
     Alert.alert('🌍 Idioma Actualizado', `Idioma cambiado a ${opcion.label}`);
   };
 
-  // 🔑 CAMBIAR CONTRASEÑA
-  const handleCambiarPassword = () => {
-    if (!passwordActual || !passwordNueva || !confirmarPassword) {
-      Alert.alert('❌ Error', 'Completa todos los campos');
-      return;
-    }
-
-    if (passwordNueva !== confirmarPassword) {
-      Alert.alert('❌ Error', 'Las contraseñas nuevas no coinciden');
-      return;
-    }
-
-    if (passwordNueva.length < 6) {
-      Alert.alert('❌ Error', 'La contraseña debe tener al menos 6 caracteres');
-      return;
-    }
-
-    // 🎭 Mock - Validación exitosa
-    console.log('🔑 Contraseña cambiada exitosamente');
-    Alert.alert('✅ Éxito', 'Contraseña actualizada correctamente');
-    
-    // Limpiar campos
-    setPasswordActual('');
-    setPasswordNueva('');
-    setConfirmarPassword('');
-    setMostrarCambioPassword(false);
+  // 🔑 NAVEGAR A CAMBIAR CONTRASEÑA
+  const handleChangePassword = () => {
+    navigation.navigate('ChangePassword');
   };
 
   return (
@@ -128,66 +104,12 @@ export const ProfileScreen: React.FC = () => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>🔐 Seguridad</Text>
           
-          {!mostrarCambioPassword ? (
-            <Button
-              title="🔑 Cambiar Contraseña"
-              variant="outline"
-              onPress={() => setMostrarCambioPassword(true)}
-              fullWidth
-            />
-          ) : (
-            <View style={styles.passwordSection}>
-              <Input
-                label="Contraseña Actual"
-                value={passwordActual}
-                onChangeText={setPasswordActual}
-                placeholder="Ingresa tu contraseña actual"
-                secureTextEntry
-                icon="🔒"
-                required
-              />
-              
-              <Input
-                label="Nueva Contraseña"
-                value={passwordNueva}
-                onChangeText={setPasswordNueva}
-                placeholder="Mínimo 6 caracteres"
-                secureTextEntry
-                icon="🆕"
-                required
-              />
-              
-              <Input
-                label="Confirmar Nueva Contraseña"
-                value={confirmarPassword}
-                onChangeText={setConfirmarPassword}
-                placeholder="Repite la nueva contraseña"
-                secureTextEntry
-                icon="✅"
-                required
-              />
-
-              <View style={styles.passwordButtons}>
-                <Button
-                  title="Cancelar"
-                  variant="outline"
-                  onPress={() => {
-                    setMostrarCambioPassword(false);
-                    setPasswordActual('');
-                    setPasswordNueva('');
-                    setConfirmarPassword('');
-                  }}
-                  style={styles.halfButton}
-                />
-                <Button
-                  title="💾 Actualizar"
-                  variant="primary"
-                  onPress={handleCambiarPassword}
-                  style={styles.halfButton}
-                />
-              </View>
-            </View>
-          )}
+          <Button
+            title="🔑 Cambiar Contraseña"
+            variant="outline"
+            onPress={handleChangePassword}
+            fullWidth
+          />
         </View>
 
         {/* 🚪 CERRAR SESIÓN */}

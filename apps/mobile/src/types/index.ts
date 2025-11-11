@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Home: undefined;
   EvaluacionCosecha: undefined;
   Profile: undefined;
+  ChangePassword: undefined;
   Login: undefined;
   Administracion: undefined;
   // Módulos de Administración:

@@ -1,0 +1,642 @@
+{
+  "timestamp": "2025-10-30T00:00:00.024Z",
+  "period": "hourly",
+  "summary": {
+    "totalRequests": 0,
+    "successfulRequests": 0,
+    "failedRequests": 0,
+    "averageMemoryUsage": 92.94,
+    "peakMemoryUsage": 97.13393408327046,
+    "averageCpuUsage": 11,
+    "peakCpuUsage": 11,
+    "averageResponseTime": 0,
+    "peakResponseTime": 0,
+    "averageDbConnections": 1.15,
+    "peakDbConnections": 2
+  },
+  "alerts": [
+    {
+      "id": "memory-heap-1761778800038",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.32%",
+      "value": 96.32126052996375,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:00:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761778860036",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.26%",
+      "value": 96.25862779466127,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:01:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761778920020",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.82%",
+      "value": 95.82219800774863,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:02:00.020Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761778980036",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.93%",
+      "value": 96.92662236973058,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:03:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779040032",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.48%",
+      "value": 96.48380573771948,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:04:00.032Z",
+      "resolved": false
+    },
+    {
+      "id": "cpu-load-1761779040032",
+      "type": "cpu",
+      "severity": "high",
+      "message": "High CPU load average: 2.37",
+      "value": 2.37,
+      "threshold": 2,
+      "timestamp": "2025-10-29T23:04:00.032Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779100021",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.77%",
+      "value": 96.77204683390204,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:05:00.021Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779160038",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.28%",
+      "value": 96.28245579311442,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:06:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779220036",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.26%",
+      "value": 96.25711353029236,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:07:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779280038",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.10%",
+      "value": 96.09764386667841,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:08:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779340035",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 93.54%",
+      "value": 93.53537827247675,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:09:00.035Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779400017",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.25%",
+      "value": 95.25421718300723,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:10:00.017Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779460034",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.68%",
+      "value": 96.67929027281016,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:11:00.034Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779520033",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.28%",
+      "value": 96.28004955203731,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:12:00.033Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779580016",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.11%",
+      "value": 96.1054887483344,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:13:00.016Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779640032",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.83%",
+      "value": 95.82675853846693,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:14:00.032Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779700027",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.97%",
+      "value": 96.97330688074199,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:15:00.027Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779760038",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.05%",
+      "value": 96.0480140832106,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:16:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779820037",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 97.13%",
+      "value": 97.1300061583912,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:17:00.037Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779880039",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.99%",
+      "value": 96.99174370134652,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:18:00.039Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761779940024",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.13%",
+      "value": 96.13154978007401,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:19:00.024Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780000020",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 94.06%",
+      "value": 94.06026183586013,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:20:00.020Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780060037",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.26%",
+      "value": 96.2550555623132,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:21:00.037Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780120021",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.86%",
+      "value": 95.85944528060341,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:22:00.021Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780180037",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.38%",
+      "value": 95.37592824458515,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:23:00.037Z",
+      "resolved": false
+    },
+    {
+      "id": "cpu-load-1761780180037",
+      "type": "cpu",
+      "severity": "high",
+      "message": "High CPU load average: 2.31",
+      "value": 2.31,
+      "threshold": 2,
+      "timestamp": "2025-10-29T23:23:00.037Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780240018",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.50%",
+      "value": 96.49998540325929,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:24:00.018Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780300026",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.52%",
+      "value": 96.5237726844163,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:25:00.026Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780360022",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.75%",
+      "value": 96.75209003702166,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:26:00.022Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780420037",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.56%",
+      "value": 96.55681808352364,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:27:00.037Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780480041",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.31%",
+      "value": 96.30802474742232,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:28:00.041Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780540040",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 97.07%",
+      "value": 97.06571722977648,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:29:00.040Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780600025",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.53%",
+      "value": 96.5334486953152,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:30:00.025Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780660038",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.47%",
+      "value": 96.47116129865655,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:31:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780720034",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 94.37%",
+      "value": 94.3741378799675,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:32:00.034Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780780030",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.46%",
+      "value": 95.46089677361273,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:33:00.030Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780840023",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.30%",
+      "value": 95.30096532255298,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:34:00.023Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780900024",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 97.13%",
+      "value": 97.13393408327046,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:35:00.024Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761780960036",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 97.10%",
+      "value": 97.09813773235476,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:36:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781020036",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 96.87%",
+      "value": 96.87277612490568,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:37:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781080043",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.79%",
+      "value": 95.78526328874005,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:38:00.043Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781140038",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.29%",
+      "value": 95.29396078398041,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:39:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781200035",
+      "type": "memory",
+      "severity": "critical",
+      "message": "High heap memory usage: 95.32%",
+      "value": 95.32049470490243,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:40:00.035Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781260014",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.46%",
+      "value": 85.46188145950909,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:41:00.014Z",
+      "resolved": false
+    },
+    {
+      "id": "cpu-load-1761781380033",
+      "type": "cpu",
+      "severity": "high",
+      "message": "High CPU load average: 2.07",
+      "value": 2.07,
+      "threshold": 2,
+      "timestamp": "2025-10-29T23:43:00.033Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781440016",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.87%",
+      "value": 85.86623822839464,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:44:00.016Z",
+      "resolved": false
+    },
+    {
+      "id": "cpu-load-1761781440016",
+      "type": "cpu",
+      "severity": "high",
+      "message": "High CPU load average: 2.27",
+      "value": 2.27,
+      "threshold": 2,
+      "timestamp": "2025-10-29T23:44:00.016Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781500022",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.35%",
+      "value": 85.34849476439791,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:45:00.022Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781560027",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.96%",
+      "value": 85.9600100079894,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:46:00.027Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781620022",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.69%",
+      "value": 85.68970398874686,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:47:00.022Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781680028",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.25%",
+      "value": 85.25099123716598,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:48:00.028Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781740038",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.31%",
+      "value": 86.30544234888148,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:49:00.038Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781800023",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.47%",
+      "value": 86.47119303307949,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:50:00.023Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781860037",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.53%",
+      "value": 86.5257482618821,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:51:00.037Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781920034",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.28%",
+      "value": 86.27847018001631,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:52:00.034Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761781980019",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.13%",
+      "value": 86.12747384323791,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:53:00.019Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761782040036",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 87.18%",
+      "value": 87.18426227731693,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:54:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761782100021",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 85.93%",
+      "value": 85.92868192017407,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:55:00.021Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761782160036",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 87.31%",
+      "value": 87.31362510199226,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:56:00.036Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761782220035",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.80%",
+      "value": 86.79663861171551,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:57:00.035Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761782280014",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 86.61%",
+      "value": 86.61337129003196,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:58:00.014Z",
+      "resolved": false
+    },
+    {
+      "id": "memory-heap-1761782340042",
+      "type": "memory",
+      "severity": "high",
+      "message": "High heap memory usage: 87.67%",
+      "value": 87.666507657918,
+      "threshold": 85,
+      "timestamp": "2025-10-29T23:59:00.042Z",
+      "resolved": false
+    }
+  ],
+  "recommendations": [
+    "Consider optimizing memory usage or increasing heap size"
+  ]
+}
